@@ -43,13 +43,13 @@ def macos_tts_speech(text):
     os.system(f'say "{text}"')
 
 def say_text(text, voice_index=0):
-    if not cfg.elevenlabs_api_key:
-        if cfg.use_mac_os_tts == 'True':
-            macos_tts_speech(text)
-        else:
-            gtts_speech(text)
-    else:
+    if cfg.elevenlabs_api_key:
         success = eleven_labs_speech(text, voice_index)
         if not success:
             gtts_speech(text)
+
+    elif cfg.use_mac_os_tts == 'True':
+        macos_tts_speech(text)
+    else:
+        gtts_speech(text)
 
